@@ -4,9 +4,10 @@ from pprint import pprint
 from statistics import mean
 import configparser
 
+ConfigPath = 'TemperatureText/'
 scrapeError = ''
 config = configparser.ConfigParser()
-config.read('TemperatureText/config.ini')
+config.read(ConfigPath+'config.ini')
 AlertConfig = config['Alert']
 SitesConfig = config['Sites']
 
@@ -23,6 +24,6 @@ for x in range(len(SitesConfig['Url'].split(','))):
 averageTemperature = mean(temperatureList)
 
 if averageTemperature > int(AlertConfig['TempThreshold']):
-    messenger = TelstraSMS()
+    messenger = TelstraSMS(ConfigPath)
     messenger.createSubscription()
     messenger.sendSMS(AlertConfig['Recipient'], AlertConfig['MessagePrecedingTemp']+' '+str(averageTemperature)+'. '+AlertConfig['MessageFollowingTemp']+' '+scrapeError)

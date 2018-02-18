@@ -16,9 +16,9 @@ class TelstraSMS:
 
     instanceCount = 0
 
-    def __init__(self):
+    def __init__(self,configPath):
         config = configparser.ConfigParser()
-        config.read('TemperatureText/config.ini')
+        config.read(configPath+'config.ini')
         TelstraAPIConfig = config['TelstraMessagingAPICredentials']
 
         self.client_id = TelstraAPIConfig['Id']
